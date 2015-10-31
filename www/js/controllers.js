@@ -11,15 +11,6 @@ angular.module('starter.controllers', [])
     });
   };
 
-  api.chegg = function(x) {
-    $http.post(baseURL + '/chegg', {
-      name: x,
-    }).success(function(data, status, headers, config) {
-      if (data.html)
-      document.getElementById("web").innerHTML = data.html.toString();
-    });
-  };
-
   return api;
 })
 
@@ -69,9 +60,19 @@ angular.module('starter.controllers', [])
         divThree.style.display='block';
         var divFour = document.getElementById('logoutCard');
         divFour.style.display='block';
+        $.Notify({
+          caption: 'Login Success',
+          content: 'You have successfully logged in.',
+          type: 'success'
+        });
+        $scope.modal.hide();
       },
       error: function(user, error) {
-        // The login failed. Check error to see why.
+        $.Notify({
+          caption: 'Login Error',
+          content: 'There was an error logging you in, please try again.',
+          type: 'alert'
+        });
       }
     });
   };
@@ -95,10 +96,19 @@ angular.module('starter.controllers', [])
           divThree.style.display='default';
           var divFour = document.getElementById('logoutCard');
           divFour.style.display='default';
+          $.Notify({
+            caption: 'Account Creation Success',
+            content: 'You have successfully created an account and been logged in.',
+            type: 'success'
+          });
+          $scope.modal.hide();
         },
         error: function(user, error) {
-          // Show the error message somewhere and let the user try again.
-          alert("Error: " + error.code + " " + error.message);
+            $.Notify({
+              caption: 'Account Error',
+              content: 'There was an error creating your account, please try again.',
+              type: 'alert'
+            });
         }
       });
     }
@@ -220,11 +230,11 @@ console.log(arr01);
     var i = 0;
     //duration = 5000;
   //  duration=(duration*1000)
-      if (isFirst) {
-        duration = 0;
-        isFirst = false;
-      }
       (function loop(){
+        if (isFirst) {
+          duration = 0;
+          isFirst = false;
+        }
         setTimeout(function(){
           if (!isFirst && !getReady)
           {
@@ -267,6 +277,12 @@ console.log(arr01);
       }, duration);
         })();
       }
+
+
+
+
+
+      //LOCAL ALGORITHM::::
       function determine(classes, grades){
         grades.sort();
       	var max=100;
@@ -309,4 +325,6 @@ console.log(arr01);
       	}
         return finale;
       }
+      //END LOCAL ALGORITHM:::
+
 });
